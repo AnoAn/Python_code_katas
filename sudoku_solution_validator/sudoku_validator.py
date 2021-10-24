@@ -1,5 +1,5 @@
 '''
-Given a Sudoku data structure with size NxN, N > 0 and √N == integer, write a method to validate if it has been filled out correctly.
+Given a Sudoku board of size NxN, N > 0 and √N == integer, write a method to validate if it has been filled out correctly.
 
 Rules for validation
 
@@ -15,14 +15,9 @@ Rules for validation
 import types
 
 class Sudoku(object):
-    def __init__(self, data):
-        '''
-        Initiate Sudoku class.
+    def __init__(self, board):
 
-        Input: any 2D matrix.
-        '''
-
-        self.data = data
+        self.board = board
 
     
 
@@ -37,14 +32,14 @@ class Sudoku(object):
         
         '''
 
-        N = len(self.data)
+        N = len(self.board)
 
-        if N != len(self.data[0]): # check if square
+        if N != len(self.board[0]): # check if square
             print('Not square')
             return False
 
         if N == 1: # if 1x1
-            unique_value= self.data[0][0]
+            unique_value= self.board[0][0]
             
             if type(unique_value) != type(1): # check if integer
                 print('Not an integer')
@@ -55,12 +50,12 @@ class Sudoku(object):
         # check row- and col-wise and element validity
         for m in range(N):
             col = []
-            for n, row in enumerate(self.data):
+            for n, row in enumerate(self.board):
                 if len(set(row)) < len(row):
                     print(f'Duplicate in row {n+1}')
                     return False
 
-                curr_value = self.data[n][m]
+                curr_value = self.board[n][m]
                 
                 if type(curr_value) != type(1): # ckeck if int and not bool
                     print(f'Invalid character in position [{n+1}, {m+1}]')
@@ -88,12 +83,11 @@ class Sudoku(object):
             return False
         
         
-        squares = [[self.data[horiz*square_size+xh][vert*square_size+xv]
+        squares = [[self.board[horiz*square_size+xh][vert*square_size+xv]
                         for m, horiz in enumerate(range(square_size))
                         for n, vert in enumerate(range(square_size))
                         for xh in range(square_size)
                         for xv in range(square_size)]]
-#                        curr_square.append(self.data[horiz*square_size+xh][vert*square_size+xv])
 
         for square in squares:
             if len(set(square)) < N:
